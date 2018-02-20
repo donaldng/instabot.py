@@ -19,6 +19,7 @@
 | media_max_like       | int | Maximum number of likes on photos to like (set to 0 to disable) | 0    |
 | media_min_like       | int | Maximum number of likes on photos to like (set to 0 to disable) | 0    |
 | follow_per_day       | int | Photos to like per day                               | 0    |
+| fake_follows_limit | int | Ignoring user with huge following list (set to 0 to disable) | 0 |
 | follow_time          | int | Seconds to wait before unfollowing                   | 5 * 60 * 60 |
 | unfollow_per_day     | int | Users to unfollow per day                            | 0    |
 | comments_per_day     | int | Comments to post per day                             | 0    |

@@ -151,7 +151,8 @@ class InstaBot:
                  user_blacklist={},
                  tag_blacklist=[],
                  unwanted_username_list=[],
-                 unfollow_whitelist=[]):
+                 unfollow_whitelist=[],
+                 fake_follows_limit=0):
 
         self.database_name = database_name
         self.follows_db = sqlite3.connect(database_name, timeout=0, isolation_level=None)
@@ -168,6 +169,7 @@ class InstaBot:
         self.tag_blacklist = tag_blacklist
         self.unfollow_whitelist = unfollow_whitelist
         self.comment_list = comment_list
+        self.fake_follows_limit = fake_follows_limit
 
         self.time_in_day = 24 * 60 * 60
         # Like
@@ -845,7 +847,7 @@ class InstaBot:
                     i = 0
                     log_string = "Checking user info.."
                     self.write_log(log_string)
-
+                    fake_follows_limit = self.fake_follows_limit
                     follows = user_info['follows']['count']
                     follower = user_info['followed_by']['count']
                     media = user_info['media']['count']
@@ -866,7 +868,7 @@ class InstaBot:
                         self.is_selebgram = True
                         self.is_fake_account = False
                         print('   >>>This is probably Selebgram account')
-                    elif follower == 0 or follows / follower > 2:
+                    elif follower == 0 or follows / follower > 2 or (fake_follows_limit and follows > fake_follows_limit):
                         self.is_fake_account = True
                         self.is_selebgram = False
                         print('   >>>This is probably Fake account')
